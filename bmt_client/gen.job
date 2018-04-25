@@ -1,0 +1,38 @@
+#!/bin/bash 
+conf_file=bmt.conf
+[ -f $conf_file ] && . $conf_file
+
+
+if [ $# -lt 1 ]
+then 
+  echo "Usage : $0 [Loop Count]"
+  echo " Loop count is N and make a job count set N*10."
+  echo " Loop count value must be less than or equal to 400"
+  echo " Ex) Loop count is 10 then 100 trx commands make"
+
+  exit 1
+fi
+if [ ! -f bmt_user.txt ]
+then 
+  echo "Can't found bmt_user.txt file. run to \"bmt.sh prepare\" First"
+  exit 1
+fi
+[ ! -d $JOB_DIR ] && mkdir -p $JOB_DIR
+for vic in $(cat bmt_user.txt | shuf -n $1 );do
+  for tgt in $(cat bmt_user.txt | shuf -n 10 );do
+    ((CNT++))
+    if [ $vic == $tgt ]
+    then
+      tgt=$(shuf -n 1 bmt_user.txt)
+    fi
+    RNC=$(tr -cd '1234567890' < /dev/urandom | fold -w 4 | head -n 1)
+    echo -n "."
+    pd_rnd=$[$RANDOM % ${#PDINFO[@]}]
+    eval $(awk -F"|" '{print "PNAME="$1" HTTP_HOST="$2" HTTP_PORT="$3}' <<< ${PDINFO[$pd_rnd]})
+    wlt_rnd=$[$RANDOM % ${#WLT[@]}]
+    eval $(awk -F"|" '{print "WALLET_NAME="$1" WALLET_HOST="$2" WALLET_PORT="$3}' <<< ${WLT[$wlt_rnd]})
+
+    CMD="cleos --wallet-host ${WALLET_HOST} --wallet-port ${WALLET_PORT} -H $HTTP_HOST -p $HTTP_PORT"
+     echo "$CMD push action eosio.token transfer '[\"$vic\",\"$tgt\",\"0.$RNC EOS\",\"BMT Count = $CNT, Trxf $vic->$tgt:$RNC\"]' -p $vic" >> $JOB_DIR/job_list
+  done
+done
