@@ -1,3 +1,7 @@
+## 실행 환경
+
+**Ubuntu 16.04 기준으로 테스트를 진행할 수 있습니다.**
+
 ## Script download
 ```bash
 git clone https://github.com/eoseoul/scripts.git
