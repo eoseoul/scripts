@@ -15,7 +15,7 @@ vi bmt.conf
 
 * DATA_DIR 경로를 현재 스크립트 파일의 경로로 수정합니다.  (매우 중요)
 * ACCOUNT_CREATOR는 랜덤 계정을 생성할 생성자이며 CREATE_AMOUNT의 코인 개수 * 400개 이상의 코인이 존재해야 합니다. (부족하면 랜덤 계정에 코인 지급 불가)
-* PDINFO는 테스트 하고자 하는 BP Node의 정보를 입력해야하며, BPNAME, Hostname 또는 IP, HTTP Port정보를 입력하면 됩니다. 
+* PDINFO는 테스트 하고자 하는 BP Node의 정보를 입력해야하며, BPNAME, HOSTNAME 또는 SERVERIP, HTTP_PORT정보를 입력하면 됩니다. 
 * Local WALLET Config의 WLT 항목은 생성하고자 하는 로컬 WALLET 개수이며, 줄이거나 늘릴 수 있습니다. 
 * 기존 EOSeoul과의 테스트 결과 비교를 원하실 경우 수정하지 마시기 바랍니다. 
 
