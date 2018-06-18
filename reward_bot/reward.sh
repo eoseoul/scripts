@@ -12,7 +12,7 @@ CLE="${base_dir}/eos_src/build/programs/cleos/cleos -u $rpc_url --wallet-url $wa
 # Default claim reward delay
 delay=86401
 # claim reward account
-account_name="eoseouldotio"
+account_name="<< Account Name >> "
 
 send_msg () {
     # Hangout call URL
