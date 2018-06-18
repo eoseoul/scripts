@@ -1,0 +1,12 @@
+#!/bin/bash
+base_dir="/neowiz/eos-mainnet"
+if [ -f $base_dir/log/refund.pid ]; then
+    _pid=$(cat $base_dir/log/refund.pid)
+    if [ ! -d "/proc/${_pid}" ]; then
+        $base_dir/reward.sh  2>&1 >> $base_dir/log/reward.log & echo $! > $base_dir/log/reward.pid
+    fi
+else
+    $base_dir/reward.sh  2>&1 >> $base_dir/log/reward.log & echo $! > $base_dir/log/reward.pid
+fi
+
+exit 0
